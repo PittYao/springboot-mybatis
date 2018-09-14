@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.mybatis.dao.TeacherDao">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.mybatis.mybatis.domain.Teacher">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="findById" parameterType="int" resultMap="BaseResultMap">
+       SELECT id,name FROM teacher t
+        WHERE t.id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.mybatis.mybatis.domain.Teacher">
+        SELECT  * FROM teacher
+    </select>
+
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        id,
+        name
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="teacher.id">
+        INSERT INTO teacher (
+            id,
+            name
+        ) VALUES (
+            #{teacher.id,jdbcType=VARCHAR},
+            #{teacher.name,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="teacher.id">
+        INSERT INTO teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teacher.id!=null">id,</if>
+            <if test="teacher.name!=null">name,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teacher.id!=null">#{teacher.id,jdbcType=VARCHAR},
+            </if>
+            <if test="teacher.name!=null">#{teacher.name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO teacher (
+        id,
+        name
+        )VALUES
+        <foreach collection="teachers" item="teacher" index="index" separator=",">
+            (
+            #{teacher.id,jdbcType=VARCHAR},
+            #{teacher.name,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE teacher
+        <set>
+            <if test="teacher.id != null">id= #{teacher.id,jdbcType=VARCHAR},</if>
+            <if test="teacher.name != null">name= #{teacher.name,jdbcType=VARCHAR}</if>
+        </set>
+        WHERE id = #{teacher.id,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
+

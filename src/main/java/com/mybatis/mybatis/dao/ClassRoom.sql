@@ -1,0 +1,7 @@
+-- auto Generated on 2018-09-13
+-- DROP TABLE IF EXISTS class_room;
+CREATE TABLE class_room(
+	id INT (11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+	name VARCHAR (50) NOT NULL DEFAULT '' COMMENT 'name',
+	PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'class_room';

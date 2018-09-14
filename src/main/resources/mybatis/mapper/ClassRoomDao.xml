@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.mybatis.dao.ClassRoomDao">
+    <!--auto generated Code-->
+    <resultMap id="BaseResultMap" type="com.mybatis.mybatis.domain.ClassRoom">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="Base_Column_List">
+        id,
+        name
+    </sql>
+
+    <!--一对多 联合查询 -->
+    <resultMap id="queryListMap" type="com.mybatis.mybatis.domain.ClassRoom">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <collection property="users" ofType="com.mybatis.mybatis.domain.User">
+            <id property="id" column="u_id" />
+            <result property="name" column="u_name"/>
+            <association property="teacher" column="u_teacher_id" select="com.mybatis.mybatis.dao.TeacherDao.findById"/>
+        </collection>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="queryListMap">
+      SELECT  c.id id,c.name name,u.id u_id,u.name u_name,u.password u_password,u.teacher_id u_teacher_id FROM class_room c LEFT JOIN user u ON c.id = u.class_id WHERE  c.id = #{id}
+
+    </select>
+
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="classRoom.id">
+        INSERT INTO class_room (
+            id,
+            name
+        ) VALUES (
+            #{classRoom.id,jdbcType=INTEGER},
+            #{classRoom.name,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="classRoom.id">
+        INSERT INTO class_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classRoom.id!=null"> id,</if>
+            <if test="classRoom.name!=null"> name,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classRoom.id!=null">#{classRoom.id,jdbcType=INTEGER},
+            </if>
+            <if test="classRoom.name!=null">#{classRoom.name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO class_room (
+            id,
+            name
+        )VALUES
+        <foreach collection="classRooms" item="classRoom" index="index" separator=",">
+            (
+            #{classRoom.id,jdbcType=INTEGER},
+            #{classRoom.name,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE class_room
+        <set>
+            <if test="classRoom.id != null"> id= #{classRoom.id,jdbcType=INTEGER},</if>
+            <if test="classRoom.name != null"> name= #{classRoom.name,jdbcType=VARCHAR}</if>
+        </set>
+        WHERE id = #{classRoom.id,jdbcType=INTEGER}
+    </update>
+</mapper>
+
